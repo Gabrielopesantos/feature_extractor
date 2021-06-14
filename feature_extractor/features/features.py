@@ -10,7 +10,8 @@ from feature_extractor.utils import set_domain, compute_time, compute_fft
 
 # Statistical features
 
-@set_domain(domain=["statistical"], input=["1d array"], \
+
+@set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
 def get_mean(signal):
     """
@@ -21,7 +22,7 @@ def get_mean(signal):
     return np.mean(signal)
 
 
-@set_domain(domain=["statistical"], input=["1d array"], \
+@set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
 def get_median(signal):
     """
@@ -32,7 +33,7 @@ def get_median(signal):
     return np.median(signal)
 
 
-@set_domain(domain=["statistical"], input=["1d array"], \
+@set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
 def get_max(signal):
     """
@@ -43,7 +44,7 @@ def get_max(signal):
     return np.max(signal)
 
 
-@set_domain(domain=["statistical"], input=["1d array"], \
+@set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
 def get_min(signal):
     """
@@ -54,7 +55,7 @@ def get_min(signal):
     return np.min(signal)
 
 
-@set_domain(domain=["statistical"], input=["1d array"], \
+@set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
 def get_std(signal):
     """
@@ -65,7 +66,7 @@ def get_std(signal):
     return np.std(signal)
 
 
-@set_domain(domain=["statistical"], input=["1d array"], \
+@set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
 def get_variance(signal):
     """
@@ -76,7 +77,7 @@ def get_variance(signal):
     return np.var(signal)
 
 
-@set_domain(domain=["statistical"], input=["1d array"], \
+@set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
 def get_range(signal):
     """
@@ -87,7 +88,7 @@ def get_range(signal):
     return np.max(signal) - np.min(signal)
 
 
-@set_domain(domain=["statistical"], input=["1d array"], \
+@set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
 def get_iqr(signal):
     """
@@ -98,7 +99,7 @@ def get_iqr(signal):
     return sp.stats.iqr(signal)
 
 
-@set_domain(domain=["statistical"], input=["1d array"], \
+@set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
 def get_kurtosis(signal):
     """
@@ -109,7 +110,7 @@ def get_kurtosis(signal):
     return sp.stats.kurtosis(signal)
 
 
-@set_domain(domain=["statistical"], input=["1d array"], \
+@set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
 def get_skewness(signal):
     """
@@ -120,7 +121,7 @@ def get_skewness(signal):
     return sp.stats.skew(signal)
 
 
-@set_domain(domain=["statistical"], input=["1d array"], \
+@set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
 def get_rms(signal):
     """
@@ -131,7 +132,7 @@ def get_rms(signal):
     return np.sqrt(np.sum(signal ** 2) / len(signal))
 
 
-@set_domain(domain=["statistical"], input=["1d array"], \
+@set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
 def get_mean_abs_deviation(signal):
     """
@@ -142,7 +143,7 @@ def get_mean_abs_deviation(signal):
     return np.mean(np.abs(signal - np.mean(signal)))
 
 
-@set_domain(domain=["statistical"], input=["1d array"], \
+@set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
 def get_median_abs_deviation(signal):
     """
@@ -154,7 +155,7 @@ def get_median_abs_deviation(signal):
 
 # Time domain features
 
-@set_domain(domain=["time"], input=["1d array"], \
+@set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
 def get_autocorr(signal):
     """
@@ -171,7 +172,7 @@ def get_crosscorr(signal):
   pass  
 """
 
-@set_domain(domain=["time"], input=["1d array"], \
+@set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
 def get_zero_crossings(signal):
     """
@@ -183,7 +184,7 @@ def get_zero_crossings(signal):
     return float(len(np.where(np.diff(np.sign(signal)))))
 
 
-@set_domain(domain=["time"], input=["2d array"], \
+@set_domain(domain=["time"], input=["2d array"],
             sensors=["accelerometer"])
 def get_svm(signal):
     """
@@ -194,7 +195,7 @@ def get_svm(signal):
     return np.sum(np.sqrt(np.sum(signal**2, axis=1)))/signal.shape[-1]
 
 
-@set_domain(domain=["time"], input=["2d array"], \
+@set_domain(domain=["time"], input=["2d array"],
             sensors=["accelerometer"])
 def get_sma(signal):
     """
@@ -207,7 +208,7 @@ def get_sma(signal):
     return np.sum(np.sum(np.abs(signal), axis=1))
 
 
-@set_domain(domain=["time"], input=["1d array"], \
+@set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
 def get_negative_turning_count(signal):
     """
@@ -224,7 +225,7 @@ def get_negative_turning_count(signal):
     return len(negative_turning_pts)
 
 
-@set_domain(domain=["time"], input=["1d array"], \
+@set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
 def get_positive_turning_count(signal):
     """
@@ -235,14 +236,14 @@ def get_positive_turning_count(signal):
     signal_diff = np.diff(signal)
     signal_diff_idxs = np.arange(len(signal_diff[:-1]))
 
-    positive_turning_pts = np.where((signal_diff[signal_diff_idxs + 1] < 0) & \
+    positive_turning_pts = np.where((signal_diff[signal_diff_idxs + 1] < 0) &
                                     (signal_diff[signal_diff_idxs] > 0))[0]
 
     return len(positive_turning_pts)
 
 
 # TODO: Usar apenas uma energy
-@set_domain(domain=["time"], input=["1d array"], \
+@set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
 def get_energy(signal):
     """
@@ -253,7 +254,7 @@ def get_energy(signal):
     return np.sum(signal ** 2) / len(signal)
 
 
-@set_domain(domain=["time"], input=["1d array"], \
+@set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
 def get_abs_energy(signal):
     """
@@ -275,7 +276,7 @@ def get_abs_energy(signal):
 #     pass
 
 
-@set_domain(domain=["time"], input=["1d array"], \
+@set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
 def get_mean_diff(signal):
     """
@@ -286,7 +287,7 @@ def get_mean_diff(signal):
     return np.mean(np.diff(signal))
 
 
-@set_domain(domain=["time"], input=["1d array"], \
+@set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
 def get_median_abs_diff(signal):
     """
@@ -296,7 +297,7 @@ def get_median_abs_diff(signal):
     return np.median(np.abs(np.diff(signal)))
 
 
-@set_domain(domain=["time"], input=["1d array"], \
+@set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
 def get_median_diff(signal):
     """
@@ -306,7 +307,7 @@ def get_median_diff(signal):
     return np.median(np.diff(signal))
 
 
-@set_domain(domain=["time"], input=["1d array"], \
+@set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
 def get_distance(signal):
     """
@@ -317,7 +318,7 @@ def get_distance(signal):
     return np.sum([np.sqrt(1 + signal_diff ** 2)])
 
 
-@set_domain(domain=["time"], input=["1d array"], \
+@set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
 def get_sum_abs_diff(signal):
     """
@@ -328,7 +329,7 @@ def get_sum_abs_diff(signal):
     return np.sum(np.abs(np.diff(signal_sign)))
 
 
-@set_domain(domain=["time"], input=["1d array", "fs"], \
+@set_domain(domain=["time"], input=["1d array", "fs"],
             sensors=["accelerometer"])
 def get_total_energy(signal, fs):
     """
@@ -339,7 +340,8 @@ def get_total_energy(signal, fs):
 
     return np.sum(np.array(signal) ** 2) / (t[-1] - t[0])
 
-@set_domain(domain=["time"], input=["1d array"], \
+
+@set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
 def get_slope(signal):
     """
@@ -347,10 +349,10 @@ def get_slope(signal):
     """
 
     t = np.linspace(0, len(signal) - 1, len(signal))
-    return (np.polyfit(t, signal, 1)[0])
+    return np.polyfit(t, signal, 1)[0]
 
 
-@set_domain(domain=["time"], input=["1d array", "fs"], \
+@set_domain(domain=["time"], input=["1d array", "fs"],
             sensors=["accelerometer"])
 def get_auc(signal, fs):
     """
