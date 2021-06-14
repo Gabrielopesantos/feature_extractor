@@ -1,1 +1,1 @@
-from feature_extractor.utils.misc import set_domain, compute_timestamps_array
+from feature_extractor.utils.feature_utils import set_domain, compute_time
