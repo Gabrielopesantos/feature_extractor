@@ -242,16 +242,14 @@ def get_positive_turning_count(signal):
     return len(positive_turning_pts)
 
 
-# TODO: Usar apenas uma energy
 @set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
-def get_energy(signal):
+def get_energy(signal, fs):
     """
-    Energy of a 1-dimensional array
-    Expects a 1d numpy array
+    https://dsp.stackexchange.com/questions/3377/calculating-the-total-energy-of-a-signal/3378
+    expects a 1d numpy array
     """
-
-    return np.sum(signal ** 2) / len(signal)
+    return np.dot(signal, signal) / len(signal)
 
 
 @set_domain(domain=["time"], input=["1d array"],
@@ -262,9 +260,7 @@ def get_abs_energy(signal):
     Expects a 1d numpy array
     """
 
-    return np.sum(np.abs(signal) ** 2)
-
-
+    return np.dot(signal, signal)
 
 # TODO: VER
 # @set_domain(domain=["time"], input=["1d array", "fs"])
@@ -329,18 +325,6 @@ def get_sum_abs_diff(signal):
     return np.sum(np.abs(np.diff(signal_sign)))
 
 
-@set_domain(domain=["time"], input=["1d array", "fs"],
-            sensors=["accelerometer"])
-def get_total_energy(signal, fs):
-    """
-    expects a 1d numpy array
-    """
-
-    t = compute_time(len(signal), fs)
-
-    return np.sum(np.array(signal) ** 2) / (t[-1] - t[0])
-
-
 @set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
 def get_slope(signal):
@@ -358,7 +342,6 @@ def get_auc(signal, fs):
     """
     Expects a 1D numpy array
     """
-
     t = compute_time(len(signal), fs)
 
     return np.sum(.5 * np.diff(t) * np.abs(signal[:-1] + signal[1:]))
@@ -366,9 +349,9 @@ def get_auc(signal, fs):
 # Frequency domain features (Spectral domain?)
 # "All frequency domain features require preprocessing and FFT"
 
-'''
-@set_domain(domain=["frequency"], input=["1d array", "fs"], \
-        sensors=["accelerometer", "audio"])
+
+@set_domain(domain=["frequency"], input=["1d array", "fs"],
+            sensors=["accelerometer", "audio"])
 def get_spectral_energy(signal, fs):
     """
     The energy of the signal can be computed as the squared sum of its spectral
@@ -376,6 +359,37 @@ def get_spectral_energy(signal, fs):
     """
 
     _, mag_freqs = compute_fft(signal, fs)
+    return np.dot(mag_freqs, mag_freqs) / len(signal)
 
-    return np.sum(mag_freqs**2) // len(signal)
-'''
+
+# Information/Spectral entropy
+
+
+@set_domain(domain=["frequency"], input=["1d array", "fs"],
+            sensors=["accelerometer", "audio"])
+def get_spectral_distance(signal, fs):
+    _, mag_freqs = compute_fft(signal, fs)
+    cumsum_mag_freqs = np.cumsum(mag_freqs)
+
+    # Computing the linear regression?
+    points_y = np.linspace(0, cumsum_mag_freqs[-1], len(cumsum_mag_freqs))
+
+    return np.sum(points_y - cumsum_mag_freqs)
+
+
+@set_domain(domain=["frequency"], input=["1d array", "fs"],
+            sensors=["accelerometer", "audio"])
+def get_fundamental_frequency(signal, fs):
+
+    signal = signal - np.mean(signal)
+    freqs, freqs_mag = compute_fft(signal, fs)
+
+    peaks = scipy.signal.find_peaks(freqs_mag, height=max(freqs)*.3)[0]
+
+    peaks = peaks[peaks != 0]
+    if not list(peaks):
+        f0 = 0
+    else:
+        f0 = peaks[min(peaks)]
+
+    return f0

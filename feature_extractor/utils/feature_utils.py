@@ -1,5 +1,4 @@
 import numpy as np
-from numba import njit
 
 
 # Attrs decorator
@@ -11,12 +10,11 @@ def set_domain(**kwargs):
 
     return decorate_func
 
-@njit
+
 def compute_time(signal_len, fs):
     return np.arange(0, signal_len)/fs
 
 
-@njit
 def compute_fft(signal, fs):
     """
     FFT of a signal
@@ -29,7 +27,7 @@ def compute_fft(signal, fs):
         Amplitude of the frequencies
     """
 
-    mag_freqs  = np.abs(np.fft.fft(signal))
+    mag_freqs = np.abs(np.fft.fft(signal))
     freqs = np.linspace(0, fs, len(signal))
     half = len(signal) // 2
 
