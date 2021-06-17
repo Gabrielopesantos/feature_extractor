@@ -13,7 +13,7 @@ from feature_extractor.utils import set_domain, compute_time, compute_fft
 
 @set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
-def get_mean(signal):
+def get_mean(signal, **kwags):
     """
     Mean of a 1-dimensional array
     Expects a 1d numpy array
@@ -24,7 +24,7 @@ def get_mean(signal):
 
 @set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
-def get_median(signal):
+def get_median(signal, **kwargs):
     """
     Median of a 1-dimensional array
     Expects a 1d numpy array
@@ -35,7 +35,7 @@ def get_median(signal):
 
 @set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
-def get_max(signal):
+def get_max(signal, **kwargs):
     """
     Max of a 1-dimensional array
     Expects a 1d numpy array
@@ -46,7 +46,7 @@ def get_max(signal):
 
 @set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
-def get_min(signal):
+def get_min(signal, **kwags):
     """
     Min of a 1-dimensional array
     Expects a 1d numpy array
@@ -57,7 +57,7 @@ def get_min(signal):
 
 @set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
-def get_std(signal):
+def get_std(signal, **kwargs):
     """
     Standard deviation of a 1-dimensional array
     Expects a 1d numpy array
@@ -68,7 +68,7 @@ def get_std(signal):
 
 @set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
-def get_variance(signal):
+def get_variance(signal, **kwargs):
     """
     Variance of a 1-dimensional array
     Expects a 1d numpy array
@@ -79,7 +79,7 @@ def get_variance(signal):
 
 @set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
-def get_range(signal):
+def get_range(signal, **kwargs):
     """
     Range between max and min of a 1-dimensional array
     Expects a 1d numpy array
@@ -90,7 +90,7 @@ def get_range(signal):
 
 @set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
-def get_iqr(signal):
+def get_iqr(signal, **kwargs):
     """
     Intra quartile range of a 1-dimensional array
     Expects a 1d numpy array
@@ -101,7 +101,7 @@ def get_iqr(signal):
 
 @set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
-def get_kurtosis(signal):
+def get_kurtosis(signal, **kwargs):
     """
     Kurtosis of a 1-dimensional array
     Expects a 1d numpy array
@@ -112,7 +112,7 @@ def get_kurtosis(signal):
 
 @set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
-def get_skewness(signal):
+def get_skewness(signal, **kwargs):
     """
     Kurtosis of a 1-dimensional array
     Expects a 1d numpy array
@@ -123,7 +123,7 @@ def get_skewness(signal):
 
 @set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
-def get_rms(signal):
+def get_rms(signal, **kwargs):
     """
     Root mean square of a 1-dimensional array
     Expects a 1d numpy array
@@ -134,7 +134,7 @@ def get_rms(signal):
 
 @set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
-def get_mean_abs_deviation(signal):
+def get_mean_abs_deviation(signal, **kwargs):
     """
     Mean absolute deviation of a 1-dimensional array
     Expects a 1d numpy array
@@ -145,7 +145,7 @@ def get_mean_abs_deviation(signal):
 
 @set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
-def get_median_abs_deviation(signal):
+def get_median_abs_deviation(signal, **kwargs):
     """
     Median absolute deviation of a 1-dimensional array
     Expects a 1d numpy array
@@ -157,7 +157,7 @@ def get_median_abs_deviation(signal):
 
 @set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
-def get_autocorr(signal):
+def get_autocorr(signal, **kwargs):
     """
     Autocorrelation of a 1-dimensional array
     Expects a 1d numpy array 
@@ -174,19 +174,19 @@ def get_crosscorr(signal):
 
 @set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
-def get_zero_crossings(signal):
+def get_zero_crossings(signal, **kwargs):
     """
     Zero-crossings of a 1-dimensional array
     Expects a 1d numpy array
     """
     # Does not work with Z without subtracting 1
 
-    return float(len(np.where(np.diff(np.sign(signal)))))
+    return np.where(np.diff(np.sign(signal)))
 
 
 @set_domain(domain=["time"], input=["2d array"],
             sensors=["accelerometer"])
-def get_svm(signal):
+def get_svm(signal, **kwargs):
     """
     Signal vector magnitude of a 2-dimensional array
     Expects a 2d numpy array with the format: [samples, components]
@@ -197,7 +197,7 @@ def get_svm(signal):
 
 @set_domain(domain=["time"], input=["2d array"],
             sensors=["accelerometer"])
-def get_sma(signal):
+def get_sma(signal, **kwargs):
     """
     Signal magnitude area of a 2-dimensional array
     Expects a 2d array
@@ -210,7 +210,7 @@ def get_sma(signal):
 
 @set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
-def get_negative_turning_count(signal):
+def get_negative_turning_count(signal, **kwargs):
     """
     Number of negative turnings of a 1-dimensional array
     Expects a 1d numpy array
@@ -227,7 +227,7 @@ def get_negative_turning_count(signal):
 
 @set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
-def get_positive_turning_count(signal):
+def get_positive_turning_count(signal, **kwargs):
     """
     Number of positive turnings of a 1-dimensional array
     Expects a 1d numpy array
@@ -244,7 +244,7 @@ def get_positive_turning_count(signal):
 
 @set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
-def get_energy(signal, fs):
+def get_energy(signal, **kwargs):
     """
     https://dsp.stackexchange.com/questions/3377/calculating-the-total-energy-of-a-signal/3378
     expects a 1d numpy array
@@ -254,7 +254,7 @@ def get_energy(signal, fs):
 
 @set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
-def get_abs_energy(signal):
+def get_abs_energy(signal, **kwargs):
     """
     Energy of a 1-dimensional array
     Expects a 1d numpy array
@@ -274,7 +274,7 @@ def get_abs_energy(signal):
 
 @set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
-def get_mean_diff(signal):
+def get_mean_diff(signal, **kwargs):
     """
     Mean of the differences between values of a 1-dimensional array
     Expects a 1d numpy array
@@ -285,7 +285,7 @@ def get_mean_diff(signal):
 
 @set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
-def get_median_abs_diff(signal):
+def get_median_abs_diff(signal, **kwargs):
     """
     expects a 1d numpy array
     """
@@ -295,7 +295,7 @@ def get_median_abs_diff(signal):
 
 @set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
-def get_median_diff(signal):
+def get_median_diff(signal, **kwargs):
     """
     expects a 1d numpy array
     """
@@ -305,7 +305,7 @@ def get_median_diff(signal):
 
 @set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
-def get_distance(signal):
+def get_distance(signal, **kwargs):
     """
     expects a 1d numpy array
     """
@@ -316,7 +316,7 @@ def get_distance(signal):
 
 @set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
-def get_sum_abs_diff(signal):
+def get_sum_abs_diff(signal, **kwargs):
     """
     expects a 1d numpy array
     """
@@ -327,7 +327,7 @@ def get_sum_abs_diff(signal):
 
 @set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
-def get_slope(signal):
+def get_slope(signal, **kwargs):
     """
     Expects a 1D numpy array
     """
@@ -338,13 +338,83 @@ def get_slope(signal):
 
 @set_domain(domain=["time"], input=["1d array", "fs"],
             sensors=["accelerometer"])
-def get_auc(signal, fs):
+def get_auc(signal, **kwargs):
     """
     Expects a 1D numpy array
     """
+    fs = kwargs.get("fs")
     t = compute_time(len(signal), fs)
 
+
     return np.sum(.5 * np.diff(t) * np.abs(signal[:-1] + signal[1:]))
+
+
+@set_domain(domain=["time"], input=["1d array"],
+        sensors=["accelerometer"])
+def get_abs_sum_of_changes(signal, **kwargs):
+        """
+        Sum over the abstolute value of consecutive changes in the signal
+        """
+        
+        return np.sum(np.abs(np.diff(signal)))
+
+@set_domain(domain=["time"], input=["1d array"],
+        sensors=["accelerometer"])
+def get_count_above_mean(signal, **kwargs):
+        """
+        Number of values in x that are higher then the mean of x 
+        """
+        m = np.mean(signal)
+        return len(np.where(signal > m)[0])
+
+
+@set_domain(domain=["time"], input=["1d array"],
+        sensors=["accelerometer"])
+def get_count_below_mean(signal, **kwargs):
+        """
+        Number of values in x that are lower then the mean of x 
+        """
+        m = np.mean(signal)
+        return len(np.where(signal < m)[0])
+
+
+@set_domain(domain=["time"], input=["1d array"],
+        sensors=["accelerometer"])
+def get_first_location_of_maximum(signal, **kwargs):
+        """
+        First location of the max value of signal (relative to the length of x)
+        """
+        return np.argmax(signal) / len(signal)
+
+
+@set_domain(domain=["time"], input=["1d array"],
+        sensors=["accelerometer"])
+def get_first_location_of_minium(signal, **kwargs):
+        """
+        First location of the min value of signal (relative to the length of x)
+        """
+
+        return np.argmin(signal) / len(signal)
+
+
+@set_domain(domain=["time"], input=["1d array"],
+        sensors=["accelerometer"])
+def get_last_location_of_maximum(signal, **kwargs):
+        """
+        First location of the max value of signal (relative to the length of x)
+        """
+        return 1.0 - np.argmax(signal[::-1]) / len(signal)
+
+
+@set_domain(domain=["time"], input=["1d array"],
+        sensors=["accelerometer"])
+def get_last_location_of_minium(signal, **kwargs):
+        """
+        First location of the min value of signal (relative to the length of x)
+        """
+
+        return 1.0 - np.argmin(signal[::-1]) / len(signal)
+
 
 # Frequency domain features (Spectral domain?)
 # "All frequency domain features require preprocessing and FFT"
@@ -352,12 +422,12 @@ def get_auc(signal, fs):
 
 @set_domain(domain=["frequency"], input=["1d array", "fs"],
             sensors=["accelerometer", "audio"])
-def get_spectral_energy(signal, fs):
+def get_spectral_energy(signal, **kwargs):
     """
     The energy of the signal can be computed as the squared sum of its spectral
     coefficients normalized by the length of the sample window;
     """
-
+    fs = kwargs.get("fs")
     _, mag_freqs = compute_fft(signal, fs)
     return np.dot(mag_freqs, mag_freqs) / len(signal)
 
@@ -367,7 +437,8 @@ def get_spectral_energy(signal, fs):
 
 @set_domain(domain=["frequency"], input=["1d array", "fs"],
             sensors=["accelerometer", "audio"])
-def get_spectral_distance(signal, fs):
+def get_spectral_distance(signal, **kwargs):
+    fs = kwargs.get("fs")
     _, mag_freqs = compute_fft(signal, fs)
     cumsum_mag_freqs = np.cumsum(mag_freqs)
 
@@ -377,19 +448,19 @@ def get_spectral_distance(signal, fs):
     return np.sum(points_y - cumsum_mag_freqs)
 
 
-@set_domain(domain=["frequency"], input=["1d array", "fs"],
-            sensors=["accelerometer", "audio"])
-def get_fundamental_frequency(signal, fs):
-
-    signal = signal - np.mean(signal)
-    freqs, freqs_mag = compute_fft(signal, fs)
-
-    peaks = scipy.signal.find_peaks(freqs_mag, height=max(freqs)*.3)[0]
-
-    peaks = peaks[peaks != 0]
-    if not list(peaks):
-        f0 = 0
-    else:
-        f0 = peaks[min(peaks)]
-
-    return f0
+# @set_domain(domain=["frequency"], input=["1d array", "fs"],
+#             sensors=["accelerometer", "audio"])
+# def get_fundamental_frequency(signal, **kwargs):
+#     fs = kwargs.get("fs")
+#     signal = signal - np.mean(signal)
+#     freqs, freqs_mag = compute_fft(signal, fs)
+#
+#     peaks = scipy.signal.find_peaks(freqs_mag, height=max(freqs)*.3)[0]
+#
+#     peaks = peaks[peaks != 0]
+#     if not list(peaks):
+#         f0 = 0
+#     else:
+#         f0 = peaks[min(peaks)]
+#
+#     return f0

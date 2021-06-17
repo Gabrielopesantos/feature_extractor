@@ -32,4 +32,3 @@ def compute_fft(signal, fs):
     half = len(signal) // 2
 
     return freqs[:half], mag_freqs[:half]
-
