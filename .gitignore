@@ -2,3 +2,4 @@
 .idea
 .vscode
 feature_extractor.iml
+**/acc_data.csv

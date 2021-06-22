@@ -3,7 +3,7 @@ import scipy as sp
 import scipy.signal
 import scipy.stats
 
-from feature_extractor.utils import set_domain, compute_time, compute_fft
+from feature_extractor.utils.feature_utils import set_domain, compute_time, compute_fft
 
 # https://tsfresh.readthedocs.io/en/latest/text/list_of_features.html
 # https://github.com/fraunhoferportugal/tsfel
@@ -13,7 +13,7 @@ from feature_extractor.utils import set_domain, compute_time, compute_fft
 
 @set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
-def get_mean(signal, **kwags):
+def get_mean(signal, **kwargs):
     """
     Mean of a 1-dimensional array
     Expects a 1d numpy array
@@ -46,7 +46,7 @@ def get_max(signal, **kwargs):
 
 @set_domain(domain=["statistical"], input=["1d array"],
             sensors=["accelerometer"])
-def get_min(signal, **kwags):
+def get_min(signal, **kwargs):
     """
     Min of a 1-dimensional array
     Expects a 1d numpy array
@@ -168,7 +168,7 @@ def get_autocorr(signal, **kwargs):
 
 """
 @set_domain(domain=["time"], input=["2d array"], sensors=["accelerometer"])
-def get_crosscorr(signal):
+def get_trosscorr(signal):
   pass  
 """
 
@@ -180,8 +180,9 @@ def get_zero_crossings(signal, **kwargs):
     Expects a 1d numpy array
     """
     # Does not work with Z without subtracting 1
+    # https://stackoverflow.com/questions/3843017/efficiently-detect-sign-changes-in-python
 
-    return np.where(np.diff(np.sign(signal)))
+    return len(np.where(np.diff(np.signbit(signal)))[0])
 
 
 @set_domain(domain=["time"], input=["2d array"],
