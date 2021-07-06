@@ -1,5 +1,6 @@
 **/__pycache__
+
 .idea
 .vscode
-feature_extractor.iml
 **/acc_data.csv
+notes.txt
