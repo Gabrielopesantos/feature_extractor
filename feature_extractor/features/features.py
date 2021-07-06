@@ -390,7 +390,7 @@ def get_first_location_of_maximum(signal, **kwargs):
 
 @set_domain(domain=["time"], input=["1d array"],
         sensors=["accelerometer"])
-def get_first_location_of_minium(signal, **kwargs):
+def get_first_location_of_minimum(signal, **kwargs):
         """
         First location of the min value of signal (relative to the length of x)
         """
@@ -409,7 +409,7 @@ def get_last_location_of_maximum(signal, **kwargs):
 
 @set_domain(domain=["time"], input=["1d array"],
         sensors=["accelerometer"])
-def get_last_location_of_minium(signal, **kwargs):
+def get_last_location_of_minimum(signal, **kwargs):
         """
         First location of the min value of signal (relative to the length of x)
         """
