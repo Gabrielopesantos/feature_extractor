@@ -2,9 +2,7 @@
 #
 # from feature_extractor.features import features
 # import numpy as np
-
 # from matplotlib import pyplot as plt
-
 # def test_outputs_shape():
 #    fs = 1600
 #    fake_data = np.random.random((1600, 3))
@@ -29,4 +27,3 @@
 #            print(f_name, out)
 #
 # # test_outputs_shape()
-

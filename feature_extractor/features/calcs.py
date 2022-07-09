@@ -1,7 +1,12 @@
 import os
-from inspect import getmembers, isfunction
+from inspect import getmembers
+from inspect import isfunction
 from multiprocessing import Pool
-from typing import Union, Tuple, List, Dict, Callable
+from typing import Callable
+from typing import Dict
+from typing import List
+from typing import Tuple
+from typing import Union
 
 import numpy as np
 
@@ -17,7 +22,7 @@ class Extractor:
     def __call__(self, window_init_end):
         start_idx, end_idx = window_init_end
 
-        window_features = np.empty((self.n_features_out))
+        window_features = np.empty(self.n_features_out)
 
         x, y, z, labels = np.split(self.data[start_idx: end_idx], 4, axis=1)
 
@@ -44,7 +49,7 @@ def get_features(domain: Tuple[str, ...] = ("time", "statistical", "frequency"))
     global features
 
     functions = getmembers(features, isfunction)
-    return {f_name: f for f_name, f in functions if f_name.startswith("get", 0, 3) \
+    return {f_name: f for f_name, f in functions if f_name.startswith("get", 0, 3)
             and any(True if d in domain else False for d in getattr(f, "domain"))}
 
 
@@ -134,19 +139,23 @@ def get_number_out_features(input_features: int, domain: Tuple[str, ...]) -> int
 #     return np.reshape(window_features, (1, -1))
 
 
-def extract_features(data: np.ndarray, windows_indices: Tuple[Tuple[int, int], ...],
-                     fs: int = 100, domain: Tuple[str] = ("time", "statistical", "frequency"),
-                     n_jobs=None) -> np.ndarray:
+def extract_features(
+    data: np.ndarray, windows_indices: Tuple[Tuple[int, int], ...],
+    fs: int = 100, domain: Tuple[str, str, str] = ("time", "statistical", "frequency"),
+        n_jobs=None) -> np.ndarray:
     n_jobs = os.cpu_count() if n_jobs is None else n_jobs
     features_dict = get_features(domain=domain)
-    n_features_out = get_number_out_features(input_features=data.shape[-1], domain=domain)
+    n_features_out = get_number_out_features(
+        input_features=data.shape[-1], domain=domain)
 
     extracted = np.empty((len(windows_indices), n_features_out))
 
     pool = Pool(n_jobs)
-    extractor = Extractor(fs=fs, data=data, features_dict=features_dict, n_features_out=n_features_out)
+    extractor = Extractor(
+        fs=fs, data=data, features_dict=features_dict, n_features_out=n_features_out)
     try:
-        extracted = np.concatenate(list(pool.map(extractor, windows_indices)), axis=0)
+        extracted = np.concatenate(
+            list(pool.map(extractor, windows_indices)), axis=0)
         # extracted = np.concatenate(list(pool.map(extractor_function(data=data, n_features_out=n_features_out, features_dict=features_dict, fs=fs), windows_indices)), axis=0)
         # extracted = np.concatenate(list(pool.map(lambda  x: _extract(x, data, n_features_out, fs, features_dict), windows_indices)), axis=0)
         # extracted = pool.map(lambda x: _extract(x, data, n_features_out, fs, features_dict), windows_indices)

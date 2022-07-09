@@ -3,7 +3,9 @@ import scipy as sp
 import scipy.signal
 import scipy.stats
 
-from feature_extractor.utils.feature_utils import set_domain, compute_time, compute_fft
+from feature_extractor.utils.feature_utils import compute_fft
+from feature_extractor.utils.feature_utils import compute_time
+from feature_extractor.utils.feature_utils import set_domain
 
 # https://tsfresh.readthedocs.io/en/latest/text/list_of_features.html
 # https://github.com/fraunhoferportugal/tsfel
@@ -155,12 +157,13 @@ def get_median_abs_deviation(signal, **kwargs):
 
 # Time domain features
 
+
 @set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
 def get_autocorr(signal, **kwargs):
     """
     Autocorrelation of a 1-dimensional array
-    Expects a 1d numpy array 
+    Expects a 1d numpy array
     """
 
     return float(np.correlate(signal, signal))
@@ -169,8 +172,9 @@ def get_autocorr(signal, **kwargs):
 """
 @set_domain(domain=["time"], input=["2d array"], sensors=["accelerometer"])
 def get_trosscorr(signal):
-  pass  
+  pass
 """
+
 
 @set_domain(domain=["time"], input=["1d array"],
             sensors=["accelerometer"])
@@ -220,7 +224,7 @@ def get_negative_turning_count(signal, **kwargs):
     signal_diff = np.diff(signal)
     signal_diff_idxs = np.arange(len(signal_diff[:-1]))
 
-    negative_turning_pts = np.where((signal_diff[signal_diff_idxs + 1] > 0) & \
+    negative_turning_pts = np.where((signal_diff[signal_diff_idxs + 1] > 0) &
                                     (signal_diff[signal_diff_idxs] < 0))[0]
 
     return len(negative_turning_pts)
@@ -300,7 +304,7 @@ def get_median_diff(signal, **kwargs):
     """
     expects a 1d numpy array
     """
-    
+
     return np.median(np.diff(signal))
 
 
@@ -311,7 +315,7 @@ def get_distance(signal, **kwargs):
     expects a 1d numpy array
     """
 
-    signal_diff = np.sign(signal) 
+    signal_diff = np.sign(signal)
     return np.sum([np.sqrt(1 + signal_diff ** 2)])
 
 
@@ -322,7 +326,7 @@ def get_sum_abs_diff(signal, **kwargs):
     expects a 1d numpy array
     """
 
-    signal_sign = np.sign(signal) 
+    signal_sign = np.sign(signal)
     return np.sum(np.abs(np.diff(signal_sign)))
 
 
@@ -346,75 +350,75 @@ def get_auc(signal, **kwargs):
     fs = kwargs.get("fs")
     t = compute_time(len(signal), fs)
 
-
     return np.sum(.5 * np.diff(t) * np.abs(signal[:-1] + signal[1:]))
 
 
 @set_domain(domain=["time"], input=["1d array"],
-        sensors=["accelerometer"])
+            sensors=["accelerometer"])
 def get_abs_sum_of_changes(signal, **kwargs):
-        """
-        Sum over the abstolute value of consecutive changes in the signal
-        """
-        
-        return np.sum(np.abs(np.diff(signal)))
+    """
+    Sum over the abstolute value of consecutive changes in the signal
+    """
+
+    return np.sum(np.abs(np.diff(signal)))
+
 
 @set_domain(domain=["time"], input=["1d array"],
-        sensors=["accelerometer"])
+            sensors=["accelerometer"])
 def get_count_above_mean(signal, **kwargs):
-        """
-        Number of values in x that are higher then the mean of x 
-        """
-        m = np.mean(signal)
-        return len(np.where(signal > m)[0])
+    """
+    Number of values in x that are higher then the mean of x
+    """
+    m = np.mean(signal)
+    return len(np.where(signal > m)[0])
 
 
 @set_domain(domain=["time"], input=["1d array"],
-        sensors=["accelerometer"])
+            sensors=["accelerometer"])
 def get_count_below_mean(signal, **kwargs):
-        """
-        Number of values in x that are lower then the mean of x 
-        """
-        m = np.mean(signal)
-        return len(np.where(signal < m)[0])
+    """
+    Number of values in x that are lower then the mean of x
+    """
+    m = np.mean(signal)
+    return len(np.where(signal < m)[0])
 
 
 @set_domain(domain=["time"], input=["1d array"],
-        sensors=["accelerometer"])
+            sensors=["accelerometer"])
 def get_first_location_of_maximum(signal, **kwargs):
-        """
-        First location of the max value of signal (relative to the length of x)
-        """
-        return np.argmax(signal) / len(signal)
+    """
+    First location of the max value of signal (relative to the length of x)
+    """
+    return np.argmax(signal) / len(signal)
 
 
 @set_domain(domain=["time"], input=["1d array"],
-        sensors=["accelerometer"])
+            sensors=["accelerometer"])
 def get_first_location_of_minimum(signal, **kwargs):
-        """
-        First location of the min value of signal (relative to the length of x)
-        """
+    """
+    First location of the min value of signal (relative to the length of x)
+    """
 
-        return np.argmin(signal) / len(signal)
+    return np.argmin(signal) / len(signal)
 
 
 @set_domain(domain=["time"], input=["1d array"],
-        sensors=["accelerometer"])
+            sensors=["accelerometer"])
 def get_last_location_of_maximum(signal, **kwargs):
-        """
-        First location of the max value of signal (relative to the length of x)
-        """
-        return 1.0 - np.argmax(signal[::-1]) / len(signal)
+    """
+    First location of the max value of signal (relative to the length of x)
+    """
+    return 1.0 - np.argmax(signal[::-1]) / len(signal)
 
 
 @set_domain(domain=["time"], input=["1d array"],
-        sensors=["accelerometer"])
+            sensors=["accelerometer"])
 def get_last_location_of_minimum(signal, **kwargs):
-        """
-        First location of the min value of signal (relative to the length of x)
-        """
+    """
+    First location of the min value of signal (relative to the length of x)
+    """
 
-        return 1.0 - np.argmin(signal[::-1]) / len(signal)
+    return 1.0 - np.argmin(signal[::-1]) / len(signal)
 
 
 # Frequency domain features (Spectral domain?)
